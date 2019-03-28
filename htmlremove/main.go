@@ -22,11 +22,11 @@ func main() {
 		os.Exit(1)
 	}
 	shared.Main(args[1:], func(doc *html.Node) {
-		parse(sel, doc)
+		remove(sel, doc)
 	})
 }
 
-func parse(sel cascadia.Selector, doc *html.Node) {
+func remove(sel cascadia.Selector, doc *html.Node) {
 	for _, n := range sel.MatchAll(doc) {
 		n.Parent.RemoveChild(n)
 	}
