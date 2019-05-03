@@ -10,3 +10,14 @@ This is a collection of utilities to manipulate HTML documents.
 You can find more info on how to use these tools in their
 [scdoc](https://git.sr.ht/~sircmpwn/scdoc) documents found in their respective
 subfolders.
+
+## Installation
+
+Either `go get` a specific tool like this:
+
+```
+go get entf.net/htmltools/htmltotext
+```
+
+or clone the repository and run `make install`. The latter will install all the
+tools and the manpages.
