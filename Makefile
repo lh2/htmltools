@@ -1,4 +1,4 @@
-TOOLS = htmlremove htmltotext htmlunwrap
+TOOLS = htmlremove htmltotext htmlunwrap htmlselect
 PREFIX = /usr/local
 MANS = $(shell find . -name '*.scd' | sed s/\.scd//)
 
