@@ -1,8 +1,10 @@
 package main // import "entf.net/htmltools/htmlselect"
 
 import (
+	"bytes"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/andybalholm/cascadia"
 	"golang.org/x/net/html"
@@ -28,6 +30,11 @@ func main() {
 
 func dosel(sel cascadia.Selector, doc *html.Node) {
 	for _, n := range sel.MatchAll(doc) {
-		html.Render(os.Stdout, n)
+		buf := &bytes.Buffer{}
+		html.Render(buf, n)
+		l := buf.String()
+		l = strings.ReplaceAll(l, "\n", " ")
+		l = strings.TrimSpace(l)
+		fmt.Println(l)
 	}
 }
