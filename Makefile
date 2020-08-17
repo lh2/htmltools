@@ -1,4 +1,4 @@
-TOOLS = htmlremove htmltotext htmlunwrap htmlselect
+TOOLS = htmlremove htmltotext htmlunwrap htmlselect htmlindentheadings
 PREFIX = /usr/local
 MANS = $(shell find . -name '*.scd' | sed s/\.scd//)
 
