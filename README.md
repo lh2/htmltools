@@ -5,8 +5,9 @@ This is a collection of utilities to manipulate HTML documents.
 - htmltotext: removes all tags from an HTML document leaving only the text nodes
 - htmlremove: removes elements matching a selector from an HTML document
 - htmlunwrap: removes elements matching a selector from an HTML document and
-  replacing them with their child nodes
+  replaces them with their child nodes
 - htmlselect: prints all elements matching a selector from an HTML document
+- htmlindentheadings: indents (shifts) all h1-h7 elements by some level
 
 You can find more info on how to use these tools in their
 [scdoc](https://git.sr.ht/~sircmpwn/scdoc) documents found in their respective
