@@ -1,5 +1,9 @@
 VPATH = doc
-PREFIX = /usr/local
+PREFIX ?= /usr/local
+BINDIR ?= $(PREFIX)/bin
+MANDIR ?= $(PREFIX)/share/man
+GO ?= go
+GOFLAGS ?=
 
 TOOLS := \
 	htmlattr \
@@ -15,18 +19,18 @@ SRC := $(shell find . -name "*.go")
 all: $(TOOLS) $(DOCS)
 
 $(TOOLS): $(SRC)
-	go build entf.net/htmltools/cmd/$@
+	$(GO) build $(GOFLAGS) entf.net/htmltools/cmd/$@
 
 %.1: %.1.scd
 	scdoc < $< > $@
 
 install: all
-	install -Dm755 $(TOOLS) -t "$(PREFIX)/bin/"
-	install -Dm644 $(DOCS) -t "$(PREFIX)/share/man/man1/"
+	install -Dm755 $(TOOLS) -t "$(DESTDIR)$(BINDIR)"
+	install -Dm644 $(DOCS) -t "$(DESTDIR)$(MANDIR)/man1/"
 
 uninstall:
-	-rm -- $(addprefix $(PREFIX)/bin/, $(TOOLS))
-	-rm -- $(addprefix $(PREFIX)/share/man/man1/, $(DOCS))
+	-rm -- $(addprefix $(DESTDIR)$(BINDIR)/, $(TOOLS))
+	-rm -- $(addprefix $(DESTDIR)$(MANDIR)/man1/, $(DOCS))
 
 clean:
 	-rm -- $(TOOLS)
