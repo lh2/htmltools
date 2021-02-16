@@ -8,10 +8,11 @@ import (
 	"golang.org/x/net/html"
 
 	"entf.net/htmltools"
+	"entf.net/htmltools/cmd"
 )
 
 func main() {
-	htmltools.Main(os.Args[1:], func(doc *html.Node) {
+	cmd.Main(os.Args[1:], func(doc *html.Node) {
 		for n := range htmltools.FindRecursive(
 			doc,
 			htmltools.MatchNodeTypeFunc(html.TextNode)) {

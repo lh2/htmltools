@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"entf.net/htmltools"
+	"entf.net/htmltools/cmd"
 	"golang.org/x/net/html"
 )
 
@@ -20,7 +21,7 @@ func main() {
 		os.Exit(1)
 	}
 	attrs := strings.Split(args[0], fs)
-	htmltools.Main(args[1:], func(doc *html.Node) {
+	cmd.Main(args[1:], func(doc *html.Node) {
 		body, err := htmltools.Body(doc)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)

@@ -7,7 +7,7 @@ import (
 	"github.com/andybalholm/cascadia"
 	"golang.org/x/net/html"
 
-	"entf.net/htmltools"
+	"entf.net/htmltools/cmd"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "selector invalid: %v\n", err)
 		os.Exit(1)
 	}
-	htmltools.Main(args[1:], func(doc *html.Node) {
+	cmd.Main(args[1:], func(doc *html.Node) {
 		remove(sel, doc)
 	})
 }

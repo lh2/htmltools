@@ -1,4 +1,4 @@
-package htmltools
+package cmd
 
 import (
 	"fmt"
@@ -8,14 +8,12 @@ import (
 	"golang.org/x/net/html"
 )
 
-var currentFile string
-
-func readerFromFile(file string) (f io.Reader, err error) {
+func readerFromFile(file string) (f io.Reader, name string, err error) {
 	if file == "-" {
-		currentFile = "[stdin]"
+		name = "[stdin]"
 		f = os.Stdin
 	} else {
-		currentFile = file
+		name = file
 		f, err = os.Open(file)
 		if err != nil {
 			return
@@ -24,8 +22,12 @@ func readerFromFile(file string) (f io.Reader, err error) {
 	return
 }
 
-func LogErr(err error) {
-	fmt.Fprintf(os.Stderr, "%s: %v\n", currentFile, err)
+func logErr(fileName string, err error) {
+	fmt.Fprintf(os.Stderr, "%s: %v\n", fileName, err)
+}
+
+func Fatal(err error) {
+	fmt.Fprintf(os.Stderr, "%v\n", err)
 }
 
 func Main(args []string, handleFunc func(*html.Node)) {
@@ -33,14 +35,14 @@ func Main(args []string, handleFunc func(*html.Node)) {
 		args = append(args, "-")
 	}
 	for _, a := range args {
-		f, err := readerFromFile(a)
+		f, fn, err := readerFromFile(a)
 		if err != nil {
-			LogErr(err)
+			logErr(fn, err)
 			continue
 		}
 		doc, err := html.Parse(f)
 		if err != nil {
-			LogErr(err)
+			logErr(fn, err)
 			return
 		}
 		handleFunc(doc)
