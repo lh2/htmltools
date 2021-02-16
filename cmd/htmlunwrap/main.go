@@ -1,4 +1,4 @@
-package main // import "entf.net/htmltools/htmlunwrap"
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/andybalholm/cascadia"
 	"golang.org/x/net/html"
 
-	"entf.net/htmltools/shared"
+	"entf.net/htmltools"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "selector invalid: %v\n", err)
 		os.Exit(1)
 	}
-	shared.Main(args[1:], func(doc *html.Node) {
+	htmltools.Main(args[1:], func(doc *html.Node) {
 		unwrap(sel, doc)
 	})
 }

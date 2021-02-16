@@ -1,4 +1,4 @@
-package main // import "entf.net/htmltools/htmltotext"
+package main
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 
 	"golang.org/x/net/html"
 
-	"entf.net/htmltools/shared"
+	"entf.net/htmltools"
 )
 
 func main() {
-	shared.Main(os.Args[1:], visit)
+	htmltools.Main(os.Args[1:], visit)
 }
 
 func visit(n *html.Node) {

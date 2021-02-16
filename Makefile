@@ -1,28 +1,35 @@
-TOOLS = htmlremove htmltotext htmlunwrap htmlselect htmlindentheadings htmlattr
+VPATH = doc
 PREFIX = /usr/local
-MANS = $(shell find . -name '*.scd' | sed s/\.scd//)
 
-all: $(TOOLS) $(MANS)
+TOOLS := \
+	htmlattr \
+	htmlindentheadings \
+	htmlremove \
+	htmlselect \
+	htmltotext \
+	htmlunwrap
+DOCS := $(addsuffix .1, $(TOOLS))
 
-$(TOOLS):
-	mkdir -p bin
-	go build -o bin/$@ entf.net/htmltools/$@
+SRC := $(shell find . -name "*.go")
+
+all: $(TOOLS) $(DOCS)
+
+$(TOOLS): $(SRC)
+	go build entf.net/htmltools/cmd/$@
 
 %.1: %.1.scd
 	scdoc < $< > $@
 
 install: all
-	mkdir -p "$(PREFIX)/bin"
-	cp $(addprefix bin/, $(TOOLS)) "$(PREFIX)/bin/"
-	mkdir -p "$(PREFIX)/share/man/man1"
-	cp $(MANS) "$(PREFIX)/share/man/man1/"
+	install -Dm755 $(TOOLS) -t "$(PREFIX)/bin/"
+	install -Dm644 $(DOCS) -t "$(PREFIX)/share/man/man1/"
 
 uninstall:
 	-rm -- $(addprefix $(PREFIX)/bin/, $(TOOLS))
-	-rm -- $(addprefix $(PREFIX)/share/man/man1/, $(notdir $(MANS)))
+	-rm -- $(addprefix $(PREFIX)/share/man/man1/, $(DOCS))
 
 clean:
-	-rm -r bin/
-	-rm -- $(MANS)
+	-rm -- $(TOOLS)
+	-rm -- $(DOCS)
 
-.PHONY: all $(TOOLS) install uninstall clean
+.PHONY: all install uninstall clean

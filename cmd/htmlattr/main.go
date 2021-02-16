@@ -1,4 +1,4 @@
-package main // import "entf.net/htmltools/htmlattr"
+package main
 
 import (
 	"flag"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"entf.net/htmltools/shared"
+	"entf.net/htmltools"
 	"golang.org/x/net/html"
 )
 
@@ -23,7 +23,7 @@ func main() {
 	for i, attr := range attrs {
 		attrs[i] = strings.ToLower(attr)
 	}
-	shared.Main(args[1:], func(doc *html.Node) {
+	htmltools.Main(args[1:], func(doc *html.Node) {
 		var body *html.Node
 		for n := doc.FirstChild.FirstChild; n != nil; n = n.NextSibling {
 			if strings.ToLower(n.Data) == "body" {

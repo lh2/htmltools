@@ -1,4 +1,4 @@
-package main // import "entf.net/htmltools/htmlindentheadings"
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/net/html"
 
-	"entf.net/htmltools/shared"
+	"entf.net/htmltools"
 )
 
 const usage = "usage: htmlindentheadings INDENT_LEVELS [FILES...]"
@@ -23,7 +23,7 @@ func main() {
 		fmt.Println(usage)
 		os.Exit(1)
 	}
-	shared.Main(args[1:], func(doc *html.Node) {
+	htmltools.Main(args[1:], func(doc *html.Node) {
 		visit(lvls, doc)
 		html.Render(os.Stdout, doc)
 	})
