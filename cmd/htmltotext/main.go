@@ -11,16 +11,13 @@ import (
 )
 
 func main() {
-	htmltools.Main(os.Args[1:], visit)
-}
-
-func visit(n *html.Node) {
-	if n.Type == html.TextNode {
-		if t := strings.TrimSpace(n.Data); t != "" {
-			fmt.Println(t)
+	htmltools.Main(os.Args[1:], func(doc *html.Node) {
+		for n := range htmltools.FindRecursive(
+			doc,
+			htmltools.MatchNodeTypeFunc(html.TextNode)) {
+			if t := strings.TrimSpace(n.Data); t != "" {
+				fmt.Println(t)
+			}
 		}
-	}
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		visit(c)
-	}
+	})
 }

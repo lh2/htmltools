@@ -20,39 +20,23 @@ func main() {
 		os.Exit(1)
 	}
 	attrs := strings.Split(args[0], fs)
-	for i, attr := range attrs {
-		attrs[i] = strings.ToLower(attr)
-	}
 	htmltools.Main(args[1:], func(doc *html.Node) {
-		var body *html.Node
-		for n := doc.FirstChild.FirstChild; n != nil; n = n.NextSibling {
-			if strings.ToLower(n.Data) == "body" {
-				body = n
-				break
-			}
-		}
-		if body == nil {
-			fmt.Fprintln(os.Stderr, "document does not contain a body")
+		body, err := htmltools.Body(doc)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		} else if body == nil {
+			fmt.Fprintln(os.Stderr, "Document does not contain a body")
 			os.Exit(1)
 		}
-		for n := body.FirstChild; n != nil; n = n.NextSibling {
-			if n.Type != html.ElementNode {
-				continue
-			}
-			list := make([]string, len(attrs))
-			var any bool
-			for i, attrn := range attrs {
-				for _, attr := range n.Attr {
-					if strings.ToLower(attr.Key) == attrn {
-						any = true
-						list[i] = attr.Val
-					}
-				}
-			}
-			line := strings.Join(list, fs)
-			if any {
-				fmt.Println(line)
-			}
+		values, err := htmltools.Attr(attrs, htmltools.Children(doc)...)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+		for _, v := range values {
+			line := strings.Join(v, fs)
+			fmt.Println(line)
 		}
 	})
 }

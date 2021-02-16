@@ -28,15 +28,10 @@ func main() {
 
 func unwrap(sel cascadia.Selector, doc *html.Node) {
 	for _, n := range sel.MatchAll(doc) {
-		cs := make([]*html.Node, 0)
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			cs = append(cs, c)
+		if err := htmltools.Unwrap(n); err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
 		}
-		for _, c := range cs {
-			n.RemoveChild(c)
-			n.Parent.InsertBefore(c, n)
-		}
-		n.Parent.RemoveChild(n)
 	}
 	html.Render(os.Stdout, doc)
 }
