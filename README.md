@@ -8,6 +8,7 @@ This is a collection of utilities to manipulate HTML documents.
   replaces them with their child nodes
 - htmlselect: prints all elements matching a selector from an HTML document
 - htmlindentheadings: indents (shifts) all h1-h7 elements by some level
+- htmlattr: print attributes of top level nodes
 
 You can find more info on how to use these tools in their
 [scdoc](https://git.sr.ht/~sircmpwn/scdoc) documents found in their respective
