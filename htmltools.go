@@ -20,8 +20,18 @@ func Body(doc *html.Node) (*html.Node, error) {
 	if doc.Type != html.DocumentNode {
 		return nil, ErrNodeIsNotADocumentNode
 	}
+	var htmln *html.Node
+	for n := doc.FirstChild; n != nil; n = n.NextSibling {
+		if n.Type == html.ElementNode && strings.ToLower(n.Data) == "html" {
+			htmln = n
+			break
+		}
+	}
+	if htmln == nil {
+		return nil, nil
+	}
 	var body *html.Node
-	for n := doc.FirstChild.FirstChild; n != nil; n = n.NextSibling {
+	for n := htmln.FirstChild; n != nil; n = n.NextSibling {
 		if strings.ToLower(n.Data) == "body" {
 			body = n
 			break
