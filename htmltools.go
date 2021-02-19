@@ -108,6 +108,8 @@ func IndentHeadings(level int, nodes ...*html.Node) error {
 		l += level
 		if l > 6 {
 			l = 6
+		} else if l < 1 {
+			l = 1
 		}
 		n.Data = fmt.Sprintf("h%d", l)
 	}
