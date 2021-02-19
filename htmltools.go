@@ -62,7 +62,10 @@ func findRecursive(node *html.Node, nodeFunc func(*html.Node) bool, ch chan<- *h
 // the whole document. If nodeFunc is `nil`, all nodes match.
 func FindRecursive(doc *html.Node, nodeFunc NodeMatchFunc) <-chan *html.Node {
 	ch := make(chan *html.Node)
-	go findRecursive(doc, nodeFunc, ch)
+	go func() {
+		findRecursive(doc, nodeFunc, ch)
+		close(ch)
+	}()
 	return ch
 }
 
