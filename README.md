@@ -9,7 +9,7 @@ This is a collection of utilities to manipulate HTML documents.
 - htmlunwrap: removes elements matching a selector from an HTML document and
   replaces them with their child nodes
 - htmlselect: prints all elements matching a selector from an HTML document
-- htmlindentheadings: indents (shifts) all h1-h7 elements by some level
+- htmlindentheadings: indents (shifts) all h1-h6 elements by some level
 - htmlattr: prints attributes of top level nodes
 
 You can find more info on how to use these tools in their
