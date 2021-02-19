@@ -1,5 +1,7 @@
 # htmltools
 
+[![godocs.io](https://godocs.io/entf.net/htmltools?status.svg)](https://godocs.io/entf.net/htmltools)
+
 This is a collection of utilities to manipulate HTML documents.
 
 - htmltotext: removes all tags from an HTML document leaving only the text nodes
