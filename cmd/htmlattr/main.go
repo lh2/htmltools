@@ -30,7 +30,7 @@ func main() {
 			fmt.Fprintln(os.Stderr, "Document does not contain a body")
 			os.Exit(1)
 		}
-		values, err := htmltools.Attr(attrs, htmltools.Children(doc)...)
+		values, err := htmltools.Attr(attrs, htmltools.Children(body)...)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
